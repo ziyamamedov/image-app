@@ -7,6 +7,7 @@ import { createGlobalStyle } from "styled-components";
 import { applyMiddleware, createStore } from "redux";
 import { allReducers } from "./redux/reducers";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const GlobalStyles = createGlobalStyle`
   html, body {
@@ -31,8 +32,7 @@ const GlobalStyles = createGlobalStyle`
 
 const store = createStore(
   allReducers,
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 ReactDOM.render(
