@@ -11,8 +11,8 @@ const CommentList = ({ comments }) => {
   return (
     <StyledCommentList>
       {comments.length ? (
-        comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
+        comments.map((comment, idx) => (
+          <CommentItem key={idx} comment={comment} />
         ))
       ) : (
         <p style={{ color: "#999999" }}>Комментариев нет</p>

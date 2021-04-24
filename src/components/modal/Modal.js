@@ -57,6 +57,7 @@ function closeModal(dispatch) {
 const Modal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((store) => store.modal);
+  const currentImage = modalState.modalImages[modalState.currentImgIndex];
   return (
     <StyledModal>
       <ModalBackground onClick={closeModal.bind(null, dispatch)} />
@@ -66,11 +67,11 @@ const Modal = () => {
         ) : (
           <>
             <div className="col-1">
-              <BigImage url={modalState.url} />
+              <BigImage url={currentImage.url} />
               <CommentForm></CommentForm>
             </div>
             <div className="col-2">
-              <CommentList comments={modalState.comments} />
+              <CommentList comments={currentImage.comments} />
             </div>
             <StyledClsBtn onClick={closeModal.bind(null, dispatch)}>
               <CloeSvg />

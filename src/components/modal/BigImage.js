@@ -1,4 +1,3 @@
-import { findByLabelText } from "@testing-library/dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ReactComponent as LoadingSvg } from "../../icons/Loading.svg";
@@ -26,7 +25,6 @@ const BigImage = ({ url }) => {
       <LoadingSvg style={{ display: isImgLoaded && "none" }} />
       <StyledBigImage
         onLoad={() => {
-          console.log(isImgLoaded);
           disp(bigImgLoaded());
         }}
         isImgLoaded={isImgLoaded}

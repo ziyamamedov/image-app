@@ -4,8 +4,9 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { allReducers } from "./redux/reducers";
+import thunk from "redux-thunk";
 
 const GlobalStyles = createGlobalStyle`
   html, body {
@@ -30,6 +31,7 @@ const GlobalStyles = createGlobalStyle`
 
 const store = createStore(
   allReducers,
+  applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

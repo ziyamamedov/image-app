@@ -4,6 +4,10 @@ const StyledCommentItem = styled.li`
   display: flex;
   flex-direction: column;
   font-size: 13px;
+  margin-bottom: 0.3rem;
+  &::last-child {
+    margin-bottom: 0;
+  }
 `;
 const CommentDate = styled.p`
   color: #999999;

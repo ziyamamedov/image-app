@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { addCommentAction } from "../../redux/actions";
 
 const StyledCommentForm = styled.form`
   display: flex;
@@ -23,14 +25,32 @@ const StyledButton = styled.button`
 `;
 
 const CommentForm = () => {
+  const disp = useDispatch();
+
   const submitHandler = (e) => {
     e.preventDefault();
+    disp(
+      addCommentAction({
+        id: 123,
+        text: `${
+          e.target.name.value
+            ? e.target.name.value + ": " + e.target.comment.value
+            : e.target.comment.value
+        }`,
+        date: Date.now(),
+      })
+    );
   };
 
   return (
     <StyledCommentForm onSubmit={submitHandler}>
       <StyledInput type="text" name="name" placeholder="Ваше имя" />
-      <StyledInput type="text" name="comment" placeholder="Ваш комментарий" />
+      <StyledInput
+        type="text"
+        name="comment"
+        required
+        placeholder="Ваш комментарий"
+      />
       <StyledButton type="submit">Оставить комментарий</StyledButton>
     </StyledCommentForm>
   );
