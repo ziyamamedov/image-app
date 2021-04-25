@@ -7,6 +7,8 @@ const StyledFooter = styled.footer`
   padding: 1rem 0;
   color: #ccc;
   border-top: 1px solid #ccc;
+
+  width: 100%;
 `;
 
 const Footer = ({ children }) => {

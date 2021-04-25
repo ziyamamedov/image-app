@@ -16,7 +16,6 @@ const StyledInput = styled.input`
 `;
 
 const StyledButton = styled.button`
-  margin-bottom: 1.25rem;
   padding: 8px 11px;
   border: none;
   border-radius: 3px;

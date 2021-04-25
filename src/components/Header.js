@@ -5,6 +5,7 @@ const StyledHeader = styled.header`
   text-transform: uppercase;
   font-family: "Roboto Condensed", sans-serif;
   padding: 1rem 0;
+  width: 100%;
 `;
 
 const Header = ({ children }) => {

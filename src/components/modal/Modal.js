@@ -28,19 +28,23 @@ const ModalBackground = styled.div`
 const ModalWindow = styled.div`
   position: relative;
   background: white;
-  padding: ${({ media }) => !media.phones && "1.5rem"};
+  padding: ${({ media }) => (media.phones ? "0 0 2rem 0" : "1.5rem")};
   display: flex;
   justify-content: center;
+
   width: ${({ media }) => {
     if (media.tablets) return "85%";
     if (media.phones) return "100%";
     else return "75%";
   }};
-
+  height: initial;
+  min-height: ${({ media }) => media.phones && "100%"};
   z-index: 2;
-
-  ${({ media }) => media.phones && "width: 100%; min-height: 100%;"}
+  max-width: 1050px;
   .col-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     flex: 1.5;
     margin-right: ${({ media }) => !media.phones && "1rem"};
   }
@@ -75,8 +79,12 @@ const Modal = () => {
         ) : (
           <>
             <div className="col-1">
-              <BigImage url={currentImage.url} />
-              {media.phones && <CommentList comments={currentImage.comments} />}
+              <div>
+                <BigImage url={currentImage.url} />
+                {media.phones && (
+                  <CommentList comments={currentImage.comments} />
+                )}
+              </div>
               <CommentForm></CommentForm>
             </div>
             {!media.phones && (

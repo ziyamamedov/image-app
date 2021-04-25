@@ -8,7 +8,7 @@ const StyledCommentList = styled.ul`
   font-size: 13px;
   padding: 0 ${({ phones }) => phones && "1.5rem"};
   margin-bottom: ${({ phones }) => phones && "1rem"};
-  height: ${({ phones }) => (phones ? "7.5rem" : "21rem")};
+  height: ${({ phones }) => (phones ? "30vh" : "21rem")};
   overflow: auto;
 `;
 

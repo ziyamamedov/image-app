@@ -10,6 +10,7 @@ const StyledImageList = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 2rem;
+  max-width: 1250px;
 `;
 
 const ImageList = () => {
