@@ -1,4 +1,16 @@
 import { combineReducers } from "redux";
+import {
+  ADD_COMMENT,
+  BIG_IMG_LOADED,
+  BIG_IMG_NOT_LOADED,
+  CLOSE_MODAL,
+  OPEN_MODAL_FROM_CACHE,
+  OPEN_MODAL_FROM_SERVER,
+  SET_IMAGES,
+  TOGGLE_IMAGES_LOADING,
+  TOGGLE_MODAL_LOADING,
+  TOGGLE_RESPONSIVE,
+} from "./actions";
 
 const modal = {
   modalImages: [],
@@ -8,11 +20,18 @@ const modal = {
 };
 const imagesState = { images: [], isLoading: false };
 
+const responsiveState = {
+  phones: window.matchMedia("(max-width: 480px)").matches,
+  tablets: window.matchMedia("(max-width: 767px) and (min-width: 481px)")
+    .matches,
+  desktop: window.matchMedia("(min-width: 768px)").matches,
+};
+
 function imagesReducer(state = imagesState, action) {
   switch (action.type) {
-    case "SET_IMAGES":
+    case SET_IMAGES:
       return { ...state, images: action.payload };
-    case "TOGGLE_IMAGES_LOADING":
+    case TOGGLE_IMAGES_LOADING:
       return { ...state, isLoading: !state.isLoading };
     default:
       return state;
@@ -21,7 +40,7 @@ function imagesReducer(state = imagesState, action) {
 
 function modalReducer(state = modal, { type, payload }) {
   switch (type) {
-    case "OPEN_MODAL_FROM_SERVER":
+    case OPEN_MODAL_FROM_SERVER:
       return {
         ...state,
         modalImages: [...state.modalImages, payload.image],
@@ -29,18 +48,18 @@ function modalReducer(state = modal, { type, payload }) {
         isLoading: true,
         currentImgIndex: payload.index,
       };
-    case "OPEN_MODAL_FROM_CACHE":
+    case OPEN_MODAL_FROM_CACHE:
       return {
         ...state,
         isOpen: true,
         isLoading: true,
         currentImgIndex: payload,
       };
-    case "CLOSE_MODAL":
+    case CLOSE_MODAL:
       return { ...state, isOpen: false };
-    case "TOGGLE_MODAL_LOADING":
+    case TOGGLE_MODAL_LOADING:
       return { ...state, isLoading: !state.isLoading };
-    case "ADD_COMMENT":
+    case ADD_COMMENT:
       let newState = { ...state };
       newState.modalImages[state.currentImgIndex].comments.push(payload);
       return newState;
@@ -51,10 +70,24 @@ function modalReducer(state = modal, { type, payload }) {
 
 function bigImageReducer(state = false, action) {
   switch (action.type) {
-    case "BIG_IMG_LOADED":
+    case BIG_IMG_LOADED:
       return true;
-    case "BIG_IMG_NOT_LOADED":
+    case BIG_IMG_NOT_LOADED:
       return false;
+    default:
+      return state;
+  }
+}
+
+function responsiveReducer(state = responsiveState, action) {
+  switch (action.type) {
+    case TOGGLE_RESPONSIVE:
+      return {
+        phones: window.matchMedia("(max-width: 480px)").matches,
+        tablets: window.matchMedia("(max-width: 767px) and (min-width: 481px)")
+          .matches,
+        desktop: window.matchMedia("(min-width: 768px)").matches,
+      };
     default:
       return state;
   }
@@ -64,4 +97,5 @@ export const allReducers = combineReducers({
   imagesState: imagesReducer,
   modal: modalReducer,
   bigImage: bigImageReducer,
+  responsive: responsiveReducer,
 });

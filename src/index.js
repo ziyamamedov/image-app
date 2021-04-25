@@ -10,6 +10,9 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const GlobalStyles = createGlobalStyle`
+* {
+  box-sizing: border-box;
+}
   html, body {
     height: 100%;
     margin: 0;

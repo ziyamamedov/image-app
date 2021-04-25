@@ -28,14 +28,21 @@ const ModalBackground = styled.div`
 const ModalWindow = styled.div`
   position: relative;
   background: white;
-  padding: 1.5rem;
+  padding: ${({ media }) => !media.phones && "1.5rem"};
   display: flex;
   justify-content: center;
-  width: 75%;
+  width: ${({ media }) => {
+    if (media.tablets) return "85%";
+    if (media.phones) return "100%";
+    else return "75%";
+  }};
+
   z-index: 2;
+
+  ${({ media }) => media.phones && "width: 100%; min-height: 100%;"}
   .col-1 {
     flex: 1.5;
-    margin-right: 1rem;
+    margin-right: ${({ media }) => !media.phones && "1rem"};
   }
   .col-2 {
     flex: 1;
@@ -57,22 +64,27 @@ function closeModal(dispatch) {
 const Modal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((store) => store.modal);
+  const media = useSelector((store) => store.responsive);
   const currentImage = modalState.modalImages[modalState.currentImgIndex];
   return (
     <StyledModal>
       <ModalBackground onClick={closeModal.bind(null, dispatch)} />
-      <ModalWindow>
+      <ModalWindow media={media}>
         {modalState.isLoading ? (
           <LoadingSvg />
         ) : (
           <>
             <div className="col-1">
               <BigImage url={currentImage.url} />
+              {media.phones && <CommentList comments={currentImage.comments} />}
               <CommentForm></CommentForm>
             </div>
-            <div className="col-2">
-              <CommentList comments={currentImage.comments} />
-            </div>
+            {!media.phones && (
+              <div className="col-2">
+                <CommentList comments={currentImage.comments} />
+              </div>
+            )}
+
             <StyledClsBtn onClick={closeModal.bind(null, dispatch)}>
               <CloeSvg />
             </StyledClsBtn>

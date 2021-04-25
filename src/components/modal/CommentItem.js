@@ -5,7 +5,7 @@ const StyledCommentItem = styled.li`
   flex-direction: column;
   font-size: 13px;
   margin-bottom: 0.3rem;
-  &::last-child {
+  &:last-child {
     margin-bottom: 0;
   }
 `;

@@ -1,10 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addCommentAction } from "../../redux/actions";
 
 const StyledCommentForm = styled.form`
   display: flex;
   flex-direction: column;
+  padding: 0 ${({ phones }) => phones && "1.5rem"};
 `;
 
 const StyledInput = styled.input`
@@ -26,7 +27,7 @@ const StyledButton = styled.button`
 
 const CommentForm = () => {
   const disp = useDispatch();
-
+  const phones = useSelector((store) => store.responsive.phones);
   const submitHandler = (e) => {
     e.preventDefault();
     disp(
@@ -40,10 +41,11 @@ const CommentForm = () => {
         date: Date.now(),
       })
     );
+    e.target.reset();
   };
 
   return (
-    <StyledCommentForm onSubmit={submitHandler}>
+    <StyledCommentForm phones={phones} onSubmit={submitHandler}>
       <StyledInput type="text" name="name" placeholder="Ваше имя" />
       <StyledInput
         type="text"

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
-  openModalFromServerAction,
   openModalFromCacheAction,
   toggleModalLoadingAction,
   bigImgNotLoaded,
+  getBigImageDataThunk,
 } from "../redux/actions";
 
 const StyledImageItem = styled.li`
@@ -21,7 +21,6 @@ const clickHandler = (id, disp, modalImages) => {
   modalImages.forEach((elem, index) => {
     if (elem.id === id) {
       found = true;
-      console.log("from cache", elem);
       disp(openModalFromCacheAction(index));
       disp(bigImgNotLoaded());
       disp(toggleModalLoadingAction());
@@ -30,14 +29,7 @@ const clickHandler = (id, disp, modalImages) => {
   });
 
   if (!found) {
-    fetch(`https://boiling-refuge-66454.herokuapp.com/images/${id}`)
-      .then((response) => response.json())
-      .then((image) => {
-        console.log("from server ", image);
-        disp(openModalFromServerAction(image, modalImages.length));
-        disp(bigImgNotLoaded());
-        disp(toggleModalLoadingAction());
-      });
+    disp(getBigImageDataThunk(id, modalImages));
   }
 };
 

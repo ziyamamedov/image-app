@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import ImageItem from "./ImageItem";
 import { useEffect } from "react";
-import { setImages, toggleImagesLoadingAction } from "../redux/actions";
+import { getImagesFromServerThunk } from "../redux/actions";
 import { ReactComponent as LoadingSvg } from "../icons/Loading.svg";
 
 const StyledImageList = styled.ul`
@@ -17,14 +17,7 @@ const ImageList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(toggleImagesLoadingAction());
-
-    fetch("https://boiling-refuge-66454.herokuapp.com/images")
-      .then((response) => response.json())
-      .then((images) => {
-        dispatch(setImages(images));
-        dispatch(toggleImagesLoadingAction());
-      });
+    dispatch(getImagesFromServerThunk());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
